@@ -10,6 +10,7 @@ namespace DemoProjekatAPI.Models
     public partial class DemoDbContext : DbContext
     {
         public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<Post> Posts { get; set; } = null!;
 
         public DemoDbContext() { }
 
