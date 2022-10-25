@@ -19,11 +19,27 @@ namespace DemoProjekatAPI.Controllers
             _context = context;
         }
 
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetSecurityTypes()
         {
             return await _context.Users.ToListAsync();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<bool>> Login(User user)
+        {
+            var successfulLogin = await _context.Users.Where(x => x.Username == user.Username && x.Password == user.Password).FirstOrDefaultAsync();
+            if (successfulLogin == null)
+                return false;
+            else
+                return true;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> AddNewUser(User user)
+        {
+            _context.Users.Add(user);
+            return await _context.SaveChangesAsync();
         }
 
     }
