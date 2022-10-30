@@ -16,7 +16,7 @@ namespace DemoProjekatAPI.Models
         [Key]
         public int postId { get; set; }
 
-        [Column("username")]
+        [Column("userId")]
         [MaxLength(50)]
         [ForeignKey("userId")]
         public string UserId { get; set; }
@@ -35,7 +35,7 @@ namespace DemoProjekatAPI.Models
         [Column("latitude")]
         public double Latitude { get; set; }
 
-        [Column("logitude")]
+        [Column("longitude")]
         public double Longitude { get; set; }
         
     }

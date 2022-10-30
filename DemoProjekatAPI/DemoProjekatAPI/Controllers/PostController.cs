@@ -1,4 +1,5 @@
 ﻿using DemoProjekatAPI.Data;
+using DemoProjekatAPI.Filters;
 using DemoProjekatAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace DemoProjekatAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TokenAuthenticationFilter]
     public class PostController : ControllerBase
     {
         private readonly BrzoDoLokacijeDbContext _context;

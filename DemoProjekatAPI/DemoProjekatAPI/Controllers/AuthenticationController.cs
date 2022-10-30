@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using DemoProjekatAPI.TokenAuthentication;
 
 namespace DemoProjekatAPI.Controllers
 {
@@ -14,10 +15,12 @@ namespace DemoProjekatAPI.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly BrzoDoLokacijeDbContext _context;
+        private readonly ITokenManager _tokenManager;
 
-        public AuthenticationController(BrzoDoLokacijeDbContext context)
+        public AuthenticationController(BrzoDoLokacijeDbContext context, ITokenManager tokenManager)
         {
             _context = context;
+            _tokenManager = tokenManager;
         }
 
         [HttpGet]
@@ -27,22 +30,29 @@ namespace DemoProjekatAPI.Controllers
         }
 
         [HttpPost("login")]
-        public string Login([FromBody]Credentials credentials)
+        public IActionResult Authenticate([FromBody]Credentials credentials)
         {
             byte[] hash;
             using (SHA256 sha = SHA256.Create())
-            {
                 hash = sha.ComputeHash(Encoding.ASCII.GetBytes(credentials.Password));
-            }
-            var user = _context.Users.Where(x => x.Username == credentials.Username && x.Hash == hash).FirstOrDefault();
-            if (user == null)
-                return "Failed Authentication";
+
+            if (_tokenManager.Authenticate(credentials.Username, hash))
+                return Ok(new { Token = _tokenManager.GenerateToken() });
             else
-                return "token";
+                return Unauthorized("User is unautherized");
+        }
+
+        [HttpPost("verify")]
+        public IActionResult Verify([FromBody]Token token)
+        {
+            if (_tokenManager.VerifyToken(token.Value))
+                return Ok(new { valid = true });
+            else
+                return Unauthorized(new { valid = false });
         }
 
         [HttpPost("register")]
-        public byte[] Register([FromBody] User user)
+        public IActionResult Register([FromBody] User user)
         {
             _context.Users.Add(user);
             byte[] hash;
@@ -52,11 +62,10 @@ namespace DemoProjekatAPI.Controllers
                 user.Hash = hash;
             }
             int success = _context.SaveChanges();
-            if (success == 0)
-                return hash;
+            if (success > 0)
+                return Authenticate(new Credentials { Username= user.Username, Password=user.Password});
             else
-                return hash;
-
+                return Unauthorized("Registration unsuccessful");
         }
     }
     public class Credentials
