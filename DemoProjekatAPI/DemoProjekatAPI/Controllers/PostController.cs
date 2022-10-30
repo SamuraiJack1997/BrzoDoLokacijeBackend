@@ -1,4 +1,5 @@
-﻿using DemoProjekatAPI.Models;
+﻿using DemoProjekatAPI.Data;
+using DemoProjekatAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,9 +13,9 @@ namespace DemoProjekatAPI.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
-        private readonly DemoDbContext _context;
+        private readonly BrzoDoLokacijeDbContext _context;
 
-        public PostController(DemoDbContext context)
+        public PostController(BrzoDoLokacijeDbContext context)
         {
             _context = context;
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Andri\\Desktop\\API\\DemoProjekatAPI\\DemoProjekatAPI\\DemoProjekatAPI.csproj": {}
+    "C:\\Users\\Andri\\Desktop\\brzodolokacijeapp\\DemoProjekatAPI\\DemoProjekatAPI\\DemoProjekatAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Andri\\Desktop\\API\\DemoProjekatAPI\\DemoProjekatAPI\\DemoProjekatAPI.csproj": {
+    "C:\\Users\\Andri\\Desktop\\brzodolokacijeapp\\DemoProjekatAPI\\DemoProjekatAPI\\DemoProjekatAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Andri\\Desktop\\API\\DemoProjekatAPI\\DemoProjekatAPI\\DemoProjekatAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Andri\\Desktop\\brzodolokacijeapp\\DemoProjekatAPI\\DemoProjekatAPI\\DemoProjekatAPI.csproj",
         "projectName": "DemoProjekatAPI",
-        "projectPath": "C:\\Users\\Andri\\Desktop\\API\\DemoProjekatAPI\\DemoProjekatAPI\\DemoProjekatAPI.csproj",
+        "projectPath": "C:\\Users\\Andri\\Desktop\\brzodolokacijeapp\\DemoProjekatAPI\\DemoProjekatAPI\\DemoProjekatAPI.csproj",
         "packagesPath": "C:\\Users\\Andri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Andri\\Desktop\\API\\DemoProjekatAPI\\DemoProjekatAPI\\obj\\",
+        "outputPath": "C:\\Users\\Andri\\Desktop\\brzodolokacijeapp\\DemoProjekatAPI\\DemoProjekatAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Andri\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.30, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.17, )"
@@ -63,6 +67,14 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.5, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.31, )"
+            },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.16, )"
             }
           },
           "imports": [

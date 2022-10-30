@@ -12,13 +12,35 @@ namespace DemoProjekatAPI.Models
     [Table("User")]
     public class User
     {
-        [Column("username")]
-        [MaxLength(50)]
+        [Column("userId")]
         [Key]
+        public int UserId { get; set; }
+
+        [Column("username")]
+        [MaxLength(255)]
         public string Username { get; set; }
 
-        [Column("password")]
-        [MaxLength(50)]
+        [Column("email")]
+        [MaxLength(255)]
+        public string Email { get; set; }
+
+        [Column("name")]
+        [MaxLength(255)]
+        public string Name { get; set; }
+
+        [Column("surname")]
+        [MaxLength(255)]
+        public string Surname { get; set; }
+
+        [Column("profilePicId")]
+        [MaxLength(255)]
+        public string ProfilePicId { get; set; }
+
+        [NotMapped]
         public string Password { get; set; }
+
+        [Column("password")]
+        [MaxLength(255)]
+        public byte[] Hash { get; set; }
     }
 }

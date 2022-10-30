@@ -1,3 +1,4 @@
+using DemoProjekatAPI.Data;
 using DemoProjekatAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 
 namespace DemoProjekatAPI
 {
@@ -20,8 +22,9 @@ namespace DemoProjekatAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DemoDbContext>(options =>
-                options.UseSqlServer(@"Server=(LocalDb)\LocalDB;Database=DemoDatabase"));
+            services.AddDbContext<BrzoDoLokacijeDbContext>(options =>
+            options.UseMySQL(Configuration.GetConnectionString("Database")));
+
             services.AddControllers();
         }
 

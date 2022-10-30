@@ -14,27 +14,23 @@ namespace DemoProjekatAPI.Models
     {
         [Column("postId")]
         [Key]
-        public int Id { get; set; }
+        public int postId { get; set; }
 
         [Column("username")]
         [MaxLength(50)]
-        [ForeignKey("username")]
-        public string Username { get; set; }
+        [ForeignKey("userId")]
+        public string UserId { get; set; }
 
-        [Column("createdAt")]
-        public DateTime CreatedAt { get; set; }
+        [Column("createdDate")]
+        public DateTime CreatedDate { get; set; }
 
-        [Column("desc")]
+        [Column("description")]
         [MaxLength(255)]
-        public string Desc { get; set; }
+        public string Description { get; set; }
 
         [Column("title")]
         [MaxLength(255)]
         public string Title { get; set; }
-
-        [Column("image")]
-        [MaxLength(255)]
-        public string Image { get; set; }
 
         [Column("latitude")]
         public double Latitude { get; set; }
