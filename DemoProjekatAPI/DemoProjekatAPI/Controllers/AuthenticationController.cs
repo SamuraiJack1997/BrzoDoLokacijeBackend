@@ -29,7 +29,12 @@ namespace DemoProjekatAPI.Controllers
         [HttpPost("login")]
         public string Login([FromBody]Credentials credentials)
         {
-            var user = _context.Users.Where(x => x.Username == credentials.Username && x.Password == credentials.Password).FirstOrDefault();
+            byte[] hash;
+            using (SHA256 sha = SHA256.Create())
+            {
+                hash = sha.ComputeHash(Encoding.ASCII.GetBytes(credentials.Password));
+            }
+            var user = _context.Users.Where(x => x.Username == credentials.Username && x.Hash == hash).FirstOrDefault();
             if (user == null)
                 return "Failed Authentication";
             else
