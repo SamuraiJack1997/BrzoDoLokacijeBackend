@@ -12,7 +12,7 @@ namespace DemoProjekatAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[TokenAuthenticationFilter]
+    [TokenAuthenticationFilter]
     public class PostController : ControllerBase
     {
         private readonly BrzoDoLokacijeDbContext _context;
