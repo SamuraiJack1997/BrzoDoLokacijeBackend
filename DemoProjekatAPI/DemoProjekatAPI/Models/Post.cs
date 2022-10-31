@@ -19,7 +19,7 @@ namespace DemoProjekatAPI.Models
         [Column("userId")]
         [MaxLength(50)]
         [ForeignKey("userId")]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         [Column("createdDate")]
         public DateTime CreatedDate { get; set; }
