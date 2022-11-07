@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 namespace DemoProjekatAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    [TokenAuthenticationFilter]
+    //[TokenAuthenticationFilter]
     public class PostController : ControllerBase
     {
         private readonly BrzoDoLokacijeDbContext _context;
@@ -74,10 +73,39 @@ namespace DemoProjekatAPI.Controllers
             return Ok(post);
         }
 
+        [HttpPost("postLikeNumber")]
+        public async Task<ActionResult<int>> GetLikeNumber([FromBody] ReqBody req)
+        {
+            var likes = await _context.Likes.Where(x => x.postId == req.postId).CountAsync();
+            return Ok(likes);
+        }
+
+        [HttpPost("like")]
+        public async Task<ActionResult<bool>> Like([FromBody] ReqBody req)
+        {
+            bool liked = false;
+            var like = await _context.Likes.Where(x => x.postId == req.postId && x.userId == req.userId).FirstOrDefaultAsync();
+            if(liked = like==null)
+                _context.Add(new Like{ postId=req.postId, userId=req.userId});
+            else
+                _context.Likes.Remove(like);
+
+            await _context.SaveChangesAsync();
+            return liked;
+        }
+
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<Post>>> GetPostsFromUser(int userId)
         {
             return await _context.Posts.Where(x => x.UserId == userId).ToListAsync();
         }
+
+
+    }
+
+    public class ReqBody
+    {
+        public int postId { get; set; }
+        public int userId { get; set; }
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 30, 2022 at 06:01 PM
+-- Generation Time: Nov 07, 2022 at 08:48 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `brzodolokacije`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `likes`
+--
+
+DROP TABLE IF EXISTS `likes`;
+CREATE TABLE IF NOT EXISTS `likes` (
+  `postId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `date` date NOT NULL,
+  KEY `postId` (`postId`),
+  KEY `userId` (`userId`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `likes`
+--
+
+INSERT INTO `likes` (`postId`, `userId`, `date`) VALUES
+(1, 6, '0001-01-01'),
+(1, 7, '2022-11-02');
 
 -- --------------------------------------------------------
 
@@ -51,7 +74,14 @@ CREATE TABLE IF NOT EXISTS `post` (
   `userId` int(11) NOT NULL,
   `createdDate` date NOT NULL,
   PRIMARY KEY (`postId`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `post`
+--
+
+INSERT INTO `post` (`postId`, `title`, `description`, `latitude`, `longitude`, `userId`, `createdDate`) VALUES
+(1, 'Test Post', 'Test post', 11.2, 12.1, 6, '2022-11-07');
 
 -- --------------------------------------------------------
 
@@ -84,14 +114,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`userId`),
   UNIQUE KEY `usernameIndex` (`username`),
   UNIQUE KEY `emailIndex` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`userId`, `username`, `name`, `surname`, `email`, `profilePicId`, `password`) VALUES
-(6, 'test', 'Test3', 'Test3', 'test', 'null', 0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08);
+(6, 'test', 'Test3', 'Test3', 'test', 'null', 0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08),
+(7, 'test3', 'Test3', 'Test3', 'test3', 'null', 0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08),
+(8, 'test4', 'Test3', 'Test3', 'test4', 'null', 0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
