@@ -1,5 +1,6 @@
 ﻿using DemoProjekatAPI.Data;
 using DemoProjekatAPI.Filters;
+using DemoProjekatAPI.Logic.PostLogic;
 using DemoProjekatAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,56 +15,77 @@ namespace DemoProjekatAPI.Controllers
     //[TokenAuthenticationFilter]
     public class PostController : ControllerBase
     {
-        private readonly BrzoDoLokacijeDbContext _context;
+        private readonly IPostManager _postManager;
 
-        public PostController(BrzoDoLokacijeDbContext context)
+        public PostController(IPostManager postManager)
         {
-            _context = context;
+            _postManager = postManager;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetAllPosts()
         {
-            return await _context.Posts.ToListAsync();
+            try
+            {
+                return await _postManager.FetchAllPosts();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult<int>> AddPost([FromBody] Post post)
         {
-            _context.Posts.Add(post);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                return await _postManager.AddNewPost(post);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        [HttpPut]
-        public async Task<ActionResult<int>> UpdatePost([FromBody] Post post)
+        [HttpPut("{userId}")]
+        public async Task<ActionResult<int>> UpdatePost([FromBody] Post post,[FromHeader]int userId)
         {
-            var existingPost = _context.Posts.FirstOrDefault(x => x.postId == post.postId); ;
-            if (existingPost != null)
+            try
             {
-                existingPost.UserId = post.UserId;
-                existingPost.Title = post.Title;
-                existingPost.Latitude = post.Latitude;
-                existingPost.Longitude = post.Longitude;
-                existingPost.Description = post.Description;
-                existingPost.CreatedDate = post.CreatedDate;
-
-                await _context.SaveChangesAsync();
+                return await _postManager.UpdatePost(post, userId);
             }
-            else
+            catch (ArgumentOutOfRangeException ae)
             {
-                return NotFound();
+                return BadRequest(ae.Message);
             }
-
-            return Ok();
+            catch(ArgumentNullException ane)
+            {
+                return NotFound(ane.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete]
-        public async Task<ActionResult<int>> DeletePost([FromBody] Post post)
+        public async Task<ActionResult<int>> DeletePost([FromBody]Post post)
         {
-            _context.Posts.Remove(post);
-            return await _context.SaveChangesAsync();
+            try
+            {
+                return await _postManager.DeletePost(post);
+            }
+            catch (ArgumentOutOfRangeException aoe)
+            {
+                return BadRequest(aoe.Message);
+            }
+            catch (ArgumentNullException ane)
+            {
+                return NotFound(ane.Message);
+            }
         }
-
+/*
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPostById(int id)
         {
@@ -98,7 +120,7 @@ namespace DemoProjekatAPI.Controllers
         public async Task<ActionResult<IEnumerable<Post>>> GetPostsFromUser(int userId)
         {
             return await _context.Posts.Where(x => x.UserId == userId).ToListAsync();
-        }
+        }*/
 
 
     }

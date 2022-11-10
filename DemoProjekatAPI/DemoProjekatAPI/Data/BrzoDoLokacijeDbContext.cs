@@ -21,6 +21,14 @@ namespace DemoProjekatAPI.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Like>().HasKey(lk => new { lk.postId, lk.userId});
+
+            modelBuilder.Entity<Post>()
+                .Property(b => b.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Post>()
+                .Property(b => b.Title)
+                .IsUnicode(false);
         }
     }
 }

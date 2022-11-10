@@ -8,12 +8,11 @@ namespace DemoProjekatAPI.Models
     [Table("Post")]
     public class Post
     {
-        [Column("postId")]
+        [Column("postId",TypeName ="Int")]
         [Key]
         public int postId { get; set; }
 
-        [Column("userId")]
-        [MaxLength(50)]
+        [Column("userId", TypeName = "Int")]
         [ForeignKey("userId")]
         public int UserId { get; set; }
 
@@ -21,11 +20,9 @@ namespace DemoProjekatAPI.Models
         public DateTime CreatedDate { get; set; }
 
         [Column("description")]
-        [MaxLength(255)]
         public string Description { get; set; }
 
         [Column("title")]
-        [MaxLength(255)]
         public string Title { get; set; }
 
         [Column("latitude")]
