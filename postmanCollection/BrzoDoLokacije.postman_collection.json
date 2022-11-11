@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "4a315220-d4f9-4f60-a536-e85113a3aca7",
+		"name": "BrzoDoLokacije",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWU1OGYwYTdmOWE0OGU2NWNlMzllMDgiLCJlbWFpbCI6IjMiLCJuYW1lIjoiQWthbGEiLCJleHBpcmUiOjE2NDMwMzkxODUsImlhdCI6MTY0MjQzNDM4NX0.QWfCVhEqhWdAfs4wzVZJG0vkp4DULlSEzSg6mKiuNvI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"username\": \"test\",\r\n        \"name\": \"Test3\",\r\n        \"surname\": \"Test3\",\r\n        \"profilePicId\": \"null\",\r\n        \"password\": \"test\",\r\n        \"email\":\"test\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Authentication/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Authentication",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Authentication/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Authentication",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Posts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "3291e6a5-df04-416a-8a5b-dc6722ef99fa",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"user4\",\r\n    \"password\":\"passs\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Post",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Post",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "userId",
+						"value": "6",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"postId\": 3,\r\n    \"userId\": 6,\r\n    \"createdDate\": \"2022-11-07T00:00:00\",\r\n    \"description\": \"Test post\",\r\n    \"title\": \"Test Post test\",\r\n    \"latitude\": 11.2,\r\n    \"longitude\": 12.1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Post",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"postId\": 0,\r\n    \"userId\": 6,\r\n    \"createdDate\": \"2022-11-07T00:00:00\",\r\n    \"description\": \"Test post 4\",\r\n    \"title\": \"Test Post 4\",\r\n    \"latitude\": 11.2,\r\n    \"longitude\": 12.1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Post",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update post",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"postId\": 4,\r\n    \"userId\": 6,\r\n    \"createdDate\": \"2022-11-07T00:00:00\",\r\n    \"description\": \"Test post 4\",\r\n    \"title\": \"Test Post 44\",\r\n    \"latitude\": 11.2,\r\n    \"longitude\": 12.1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Post/6",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Post",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get post by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Post/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Post",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Like post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\":7,\r\n    \"postId\":4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Post/like",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Post",
+						"like"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post like number",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\":7,\r\n    \"postId\":4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Post/postLikeNumber",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Post",
+						"postLikeNumber"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
