@@ -27,7 +27,7 @@ namespace DemoProjekatAPI.Controllers
         {
             try
             {
-                return await _postManager.FetchAllPosts();
+                return await _postManager.GetAllPosts();
             }
             catch(Exception e)
             {
@@ -85,42 +85,53 @@ namespace DemoProjekatAPI.Controllers
                 return NotFound(ane.Message);
             }
         }
-/*
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPostById(int id)
         {
-            var post = await _context.Posts.FirstOrDefaultAsync(x => x.postId == id);
-            if (post == null)
-                return NotFound();
-            return Ok(post);
+            Post post;
+            try
+            {
+                post = await _postManager.GetPostById(id);
+            }
+            catch(Exception e)
+            {
+                return NotFound(e.Message);
+            }
+            return post;
         }
 
         [HttpPost("postLikeNumber")]
         public async Task<ActionResult<int>> GetLikeNumber([FromBody] ReqBody req)
         {
-            var likes = await _context.Likes.Where(x => x.postId == req.postId).CountAsync();
-            return Ok(likes);
+            try
+            {
+                return await _postManager.GetPostLikeNumber(req.postId);
+            }
+            catch(Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         [HttpPost("like")]
         public async Task<ActionResult<bool>> Like([FromBody] ReqBody req)
         {
-            bool liked = false;
-            var like = await _context.Likes.Where(x => x.postId == req.postId && x.userId == req.userId).FirstOrDefaultAsync();
-            if(liked = like==null)
-                _context.Add(new Like{ postId=req.postId, userId=req.userId});
-            else
-                _context.Likes.Remove(like);
-
-            await _context.SaveChangesAsync();
-            return liked;
+            try
+            {
+                return await _postManager.LikeOrDislikePost(req.postId, req.userId);
+            }
+            catch(Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<Post>>> GetPostsFromUser(int userId)
         {
-            return await _context.Posts.Where(x => x.UserId == userId).ToListAsync();
-        }*/
+            return await _postManager.GetPostByUser(userId);
+        }
 
 
     }

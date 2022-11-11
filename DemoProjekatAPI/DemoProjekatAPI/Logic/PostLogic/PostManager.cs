@@ -17,7 +17,7 @@ namespace DemoProjekatAPI.Logic.PostLogic
             _context = context;
         }
 
-        public async Task<ActionResult<IEnumerable<Post>>> FetchAllPosts()
+        public async Task<ActionResult<IEnumerable<Post>>> GetAllPosts()
         {
             return await _context.Posts.ToListAsync();
         }
@@ -41,10 +41,10 @@ namespace DemoProjekatAPI.Logic.PostLogic
             {
                 throw new ArgumentNullException("This post does not exist");
             }
-            if (existingPost.UserId != userId)
+/*            if (existingPost.UserId != userId)
             {
                 throw new Exception("This user cannot modify this post");
-            }
+            }*/
 
             existingPost.UserId = post.UserId;
             existingPost.Title = post.Title;
@@ -71,6 +71,47 @@ namespace DemoProjekatAPI.Logic.PostLogic
 
             _context.Posts.Remove(fetchedPost);
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<Post> GetPostById(int postId)
+        {
+            var post = await _context.Posts.FirstOrDefaultAsync(x => x.postId == postId);
+            if (post == null)
+                throw new Exception("Post with id " + postId + " not found");
+            return post;
+        }
+
+        public async Task<ActionResult<IEnumerable<Post>>> GetPostByUser(int userId)
+        {
+            return await _context.Posts.Where(x => x.UserId == userId).ToListAsync();
+        }
+
+        public async Task<int> GetPostLikeNumber(int postId)
+        {
+            Post post = await _context.Posts.FirstOrDefaultAsync(x => x.postId == postId);
+            if (post == null)
+                throw new Exception("Post does not exist");
+            return await _context.Likes.Where(x => x.postId == postId).CountAsync();
+        }
+
+        public async Task<bool> LikeOrDislikePost(int postId, int userId)
+        {
+            Post post = await _context.Posts.FirstOrDefaultAsync(x => x.postId == postId);
+            if (post == null)
+                throw new Exception("This post does not exist");
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+            if (user == null)
+                throw new Exception("This user does not exist");
+
+            bool liked = false;
+            var like = await _context.Likes.Where(x => x.postId == postId && x.userId == userId).FirstOrDefaultAsync();
+            if (liked = like == null)
+                _context.Add(new Like { postId = postId, userId = userId });
+            else
+                _context.Likes.Remove(like);
+
+            await _context.SaveChangesAsync();
+            return liked;
         }
     }
 }
