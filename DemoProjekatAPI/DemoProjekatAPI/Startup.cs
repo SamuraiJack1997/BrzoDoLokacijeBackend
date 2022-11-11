@@ -1,4 +1,5 @@
 using DemoProjekatAPI.Data;
+using DemoProjekatAPI.Logic.PostLogic;
 using DemoProjekatAPI.Models;
 using DemoProjekatAPI.TokenAuthentication;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +27,8 @@ namespace DemoProjekatAPI
             services.AddDbContext<BrzoDoLokacijeDbContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("Database")));
 
+
+            services.AddScoped<IPostManager, PostManager>();
             services.AddSingleton<ITokenManager,TokenManager>();
 
             services.AddControllers();
