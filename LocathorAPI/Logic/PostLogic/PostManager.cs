@@ -124,9 +124,10 @@ namespace DemoProjekatAPI.Logic.PostLogic
             if (user == null)
                 throw new Exception("This user does not exist");
 
-            //TO DO curse comment check...
+            comment.date = DateTime.Now;
 
             _context.Comments.Add(comment);
+            _context.SaveChanges();
             return true;
         }
 
@@ -141,6 +142,19 @@ namespace DemoProjekatAPI.Logic.PostLogic
 
             return comments;
 
+        }
+
+        public async Task<bool> ChangePostPhoto(Post post)
+        {
+            var newPost = await _context.Posts.Where(x => x.postId == post.postId).FirstOrDefaultAsync();
+            if (newPost == null)
+            {
+                throw new Exception("This post does not exist");
+            }
+
+            newPost.PhotoUrl = post.PhotoUrl;
+            _context.SaveChanges();
+            return true;
         }
     }
 }

@@ -20,5 +20,6 @@ namespace DemoProjekatAPI.Logic.PostLogic
         public Task<bool> LikeOrDislikePost(int postId, int userId);
         public Task<bool> CommentOnPost(Comment comment);
         public Task<ActionResult<IEnumerable<Comment>>> GetCommentsFromPost(int postId);
+        public Task<bool> ChangePostPhoto(Post post);
     }
 }

@@ -8,4 +8,8 @@ CREATE TABLE IF NOT EXISTS `Comment` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
+ALTER TABLE `post`
+ADD `post_url` varchar(255);
+
 INSERT INTO `comment` (`commentId`, `userId`, `postId`, `comment`) VALUES (NULL, '6', '1', 'Comment Test...');
+

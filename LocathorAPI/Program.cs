@@ -24,7 +24,7 @@ namespace LocathorAPI
             builder.Services.AddSingleton<ITokenManager, TokenManager>();
 
             var app = builder.Build();
-            app.Urls.Add("http://softeng.pmf.kg.ac.rs:10012");
+            //app.Urls.Add("http://softeng.pmf.kg.ac.rs:10012");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -137,6 +137,7 @@ namespace DemoProjekatAPI.Controllers
         [HttpPost("comment")]
         public async Task<ActionResult<bool>> CommentPost([FromBody]Comment comment)
         {
+            Console.WriteLine(comment.comment+" "+comment.postId);
             try
             {
                 return await _postManager.CommentOnPost(comment);
@@ -147,11 +148,25 @@ namespace DemoProjekatAPI.Controllers
             }
         }
 
+        [HttpGet("comment/{postId}")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetPostComments(int postId)
         {
             try
             {
                 return await _postManager.GetCommentsFromPost(postId);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpPost("changePhoto")]
+        public async Task<ActionResult<bool>> ChangePhoto(Post post)
+        {
+            try
+            {
+                return await _postManager.ChangePostPhoto(post);
             }
             catch (Exception e)
             {
@@ -166,4 +181,5 @@ namespace DemoProjekatAPI.Controllers
         public int postId { get; set; }
         public int userId { get; set; }
     }
+
 }

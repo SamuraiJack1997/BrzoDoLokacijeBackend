@@ -30,6 +30,9 @@ namespace DemoProjekatAPI.Models
 
         [Column("longitude")]
         public double Longitude { get; set; }
+
+        [Column("photo_url")]
+        public string PhotoUrl { get; set; }
         
     }
 }

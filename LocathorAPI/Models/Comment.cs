@@ -10,15 +10,14 @@ namespace LocathorAPI.Models
         [Column("commentId", TypeName = "Int")]
         [Key]
         public int commentId { get; set; }
+        [ForeignKey("userId")]
         public int userId { get; set; }
 
-        [ForeignKey("userId")]
-        public User user { get; set; }
-
+        [ForeignKey("postId")]
         public int postId { get; set; }
 
-        [ForeignKey("postId")]
-        public Post post { get; set; }
+        [Column("comment")]
+        public string comment { get; set; }
 
         [Column("date")]
         public DateTime date { get; set; }
