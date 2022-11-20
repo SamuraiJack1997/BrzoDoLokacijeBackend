@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DemoProjekatAPI.Models;
+﻿using DemoProjekatAPI.Models;
+using LocathorAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProjekatAPI.Data
@@ -17,6 +14,7 @@ namespace DemoProjekatAPI.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

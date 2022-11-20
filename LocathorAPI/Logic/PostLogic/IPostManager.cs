@@ -1,4 +1,5 @@
 ﻿using DemoProjekatAPI.Models;
+using LocathorAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,7 @@ namespace DemoProjekatAPI.Logic.PostLogic
         public Task<ActionResult<IEnumerable<Post>>> GetPostByUser(int userId);
         public Task<int> GetPostLikeNumber(int postId);
         public Task<bool> LikeOrDislikePost(int postId, int userId);
+        public Task<bool> CommentOnPost(Comment comment);
+        public Task<ActionResult<IEnumerable<Comment>>> GetCommentsFromPost(int postId);
     }
 }

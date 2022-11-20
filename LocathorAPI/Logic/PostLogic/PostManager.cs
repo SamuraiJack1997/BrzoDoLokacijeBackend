@@ -1,5 +1,6 @@
 ﻿using DemoProjekatAPI.Data;
 using DemoProjekatAPI.Models;
+using LocathorAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -88,7 +89,7 @@ namespace DemoProjekatAPI.Logic.PostLogic
 
         public async Task<int> GetPostLikeNumber(int postId)
         {
-            Post post = await _context.Posts.FirstOrDefaultAsync(x => x.postId == postId);
+            Post post = await _context.Posts.FirstOrDefaultAsync(x => x.postId == postId)!;
             if (post == null)
                 throw new Exception("Post does not exist");
             return await _context.Likes.Where(x => x.postId == postId).CountAsync();
@@ -99,7 +100,7 @@ namespace DemoProjekatAPI.Logic.PostLogic
             Post post = await _context.Posts.FirstOrDefaultAsync(x => x.postId == postId);
             if (post == null)
                 throw new Exception("This post does not exist");
-            User user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId)!;
             if (user == null)
                 throw new Exception("This user does not exist");
 
@@ -112,6 +113,34 @@ namespace DemoProjekatAPI.Logic.PostLogic
 
             await _context.SaveChangesAsync();
             return liked;
+        }
+
+        public async Task<bool> CommentOnPost(Comment comment)
+        {
+            Post post = await _context.Posts.FirstOrDefaultAsync(x => x.postId == comment.postId);
+            if (post == null)
+                throw new Exception("This post does not exist");
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == comment.userId)!;
+            if (user == null)
+                throw new Exception("This user does not exist");
+
+            //TO DO curse comment check...
+
+            _context.Comments.Add(comment);
+            return true;
+        }
+
+        public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsFromPost(int postId)
+        {
+            Post post = await _context.Posts.FirstOrDefaultAsync(x => x.postId == postId);
+            if (post == null)
+                throw new Exception("This post does not exist");
+
+            List<Comment> comments = new List<Comment>();
+            comments = await _context.Comments.Where(x=>x.postId==postId).ToListAsync();
+
+            return comments;
+
         }
     }
 }

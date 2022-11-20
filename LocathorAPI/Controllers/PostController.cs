@@ -2,6 +2,7 @@
 using DemoProjekatAPI.Filters;
 using DemoProjekatAPI.Logic.PostLogic;
 using DemoProjekatAPI.Models;
+using LocathorAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -133,6 +134,30 @@ namespace DemoProjekatAPI.Controllers
             return await _postManager.GetPostByUser(userId);
         }
 
+        [HttpPost("comment")]
+        public async Task<ActionResult<bool>> CommentPost([FromBody]Comment comment)
+        {
+            try
+            {
+                return await _postManager.CommentOnPost(comment);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        public async Task<ActionResult<IEnumerable<Comment>>> GetPostComments(int postId)
+        {
+            try
+            {
+                return await _postManager.GetCommentsFromPost(postId);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
 
     }
 
