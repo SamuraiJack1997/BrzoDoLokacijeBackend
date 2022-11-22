@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DemoProjekatAPI.Models
 {
-    [Table("Post")]
+    [Table("post")]
     public class Post
     {
         [Column("postId",TypeName ="Int")]
@@ -15,6 +15,9 @@ namespace DemoProjekatAPI.Models
         [Column("userId", TypeName = "Int")]
         [ForeignKey("userId")]
         public int UserId { get; set; }
+
+        [NotMapped]
+        public string Username { get; set; }
 
         [Column("createdDate")]
         public DateTime CreatedDate { get; set; }

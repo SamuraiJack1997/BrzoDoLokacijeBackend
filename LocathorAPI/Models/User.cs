@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace DemoProjekatAPI.Models
 {
-    [Table("User")]
+    [Table("user")]
     public class User
     {
         [Column("userId")]
@@ -41,6 +42,7 @@ namespace DemoProjekatAPI.Models
 
         [Column("password")]
         [MaxLength(255)]
+        [JsonIgnore]
         public byte[] Hash { get; set; }
     }
 }

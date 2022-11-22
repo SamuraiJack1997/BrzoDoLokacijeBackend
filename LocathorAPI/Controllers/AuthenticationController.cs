@@ -37,7 +37,15 @@ namespace DemoProjekatAPI.Controllers
                 hash = sha.ComputeHash(Encoding.ASCII.GetBytes(credentials.Password));
 
             if (_tokenManager.Authenticate(credentials.Username, hash))
-                return Ok(new { Token = _tokenManager.GenerateToken() });
+            {
+                UserSerialization user = new()
+                {
+                    Token = _tokenManager.GenerateToken(),
+                    User = _context.Users.Where(x => x.Username == credentials.Username).FirstOrDefault()
+                };
+                user.User.Hash = null;
+                return Ok(user);
+            }
             else
                 return Unauthorized("User is unautherized");
         }
@@ -72,5 +80,11 @@ namespace DemoProjekatAPI.Controllers
     {
         public string Username { get; set; }
         public string Password { get; set; }
+    }
+
+    public class UserSerialization
+    {
+        public User User { get; set; }
+        public Token Token { get; set; }
     }
 }

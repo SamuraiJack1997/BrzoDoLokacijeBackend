@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DemoProjekatAPI.Models
 {
-    [Table("Likes")]
+    [Table("likes")]
     public class Like
     {
         public int userId { get; set; }

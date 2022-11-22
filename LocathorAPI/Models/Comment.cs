@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LocathorAPI.Models
 {
-    [Table("Comment")]
+    [Table("comment")]
     public class Comment
     {
         [Column("commentId", TypeName = "Int")]
