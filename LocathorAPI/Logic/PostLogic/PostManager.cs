@@ -29,7 +29,11 @@ namespace DemoProjekatAPI.Logic.PostLogic
                 throw new Exception("Wrong HTTP method, did you mean to use PUT?");
 
             User user = await _context.Users.Where(x => x.Username == post.Username).FirstOrDefaultAsync();
-            post.postId = user.UserId;
+            if (user == null)
+                throw new Exception("User does not exist");
+            post.UserId = user.UserId;
+
+            post.CreatedDate = DateTime.Now;
 
             _context.Posts.Add(post);
             return await _context.SaveChangesAsync();

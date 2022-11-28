@@ -28,6 +28,7 @@ namespace DemoProjekatAPI.Controllers
         {
             try
             {
+                Console.WriteLine("TEST");
                 return await _postManager.GetAllPosts();
             }
             catch(Exception e)
