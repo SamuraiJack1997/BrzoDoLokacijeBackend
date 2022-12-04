@@ -177,7 +177,7 @@ namespace DemoProjekatAPI.Controllers
         }
 
         [HttpPost("IsLiked")]
-        public async Task<ActionResult<bool>> TopPosts([FromBody] Like like)
+        public async Task<ActionResult<bool>> IsLiked([FromBody] Like like)
         {
             try
             {
@@ -191,12 +191,33 @@ namespace DemoProjekatAPI.Controllers
             
         }
 
+        [HttpPost("Pinpoint")]
+        public async Task<ActionResult<IEnumerable<Post>>> PinPoint([FromBody] Coordinates coordinates)
+        {
+            try
+            {
+                Console.WriteLine(coordinates.latitude+" , "+coordinates.longitude);
+                var posts = await _postManager.PinpointPosts(coordinates.latitude, coordinates.longitude, 50);
+                return posts;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 
     public class ReqBody
     {
         public int postId { get; set; }
         public int userId { get; set; }
+    }
+
+    public class Coordinates
+    {
+        public double latitude { get; set; }
+        public double longitude { get; set; }
     }
 
 }

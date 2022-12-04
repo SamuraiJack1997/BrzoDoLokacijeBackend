@@ -173,9 +173,15 @@ namespace DemoProjekatAPI.Logic.PostLogic
             throw new NotImplementedException();
         }
 
-        public Task<ActionResult<IEnumerable<Post>>> PinpointPosts(double lat, double longit, double radius)
+        public async Task<ActionResult<IEnumerable<Post>>> PinpointPosts(double la1, double lo1, double r)
         {
-            throw new NotImplementedException();
+            var posts = await _context.Posts.Where(x => (x.Latitude < la1 + r && x.Latitude > la1 - r) && (x.Longitude < lo1 + r && x.Longitude > lo1 - r)).ToListAsync();
+            return posts;
+        }
+
+        private bool IsInsideTheSquare(double la,double lo, double la1,double lo1,double r)
+        {
+            return (la < r + la1 && la < la1 - r) && (lo < r + lo1 && lo < lo1 - r);
         }
 
         public async Task<bool> IsLiked(int userId, int postId)
@@ -191,6 +197,7 @@ namespace DemoProjekatAPI.Logic.PostLogic
             var liked = await _context.Likes.Where(x => x.postId == postId && x.userId == userId).FirstOrDefaultAsync();
             return liked!=null;
         }
+
 
         public class PostLikes
         {
