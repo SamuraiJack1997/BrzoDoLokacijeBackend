@@ -20,11 +20,12 @@ namespace LocathorAPI
             builder.Services.AddDbContext<BrzoDoLokacijeDbContext>(options =>
                 options.UseMySQL(builder.Configuration.GetConnectionString("Database")));
 
+
             builder.Services.AddScoped<IPostManager, PostManager>();
             builder.Services.AddSingleton<ITokenManager, TokenManager>();
 
             var app = builder.Build();
-            app.Urls.Add(builder.Configuration.GetSection("Service").Get<string>());
+            //app.Urls.Add(builder.Configuration.GetSection("Service").Get<string>());
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -34,12 +35,23 @@ namespace LocathorAPI
 
             app.UseHttpsRedirection();
 
+            app.Lifetime.ApplicationStopping.Register(() =>
+            {
+                Console.WriteLine("Application stopping");
+                var serviceDescriptor = builder.Services.FirstOrDefault(descriptor => descriptor.ServiceType == typeof(BrzoDoLokacijeDbContext));
+                builder.Services.Remove(serviceDescriptor);
+            });
+
             app.UseAuthorization();
 
 
             app.MapControllers();
 
             app.Run();
+        }
+        void OnStopping()
+        {
+
         }
     }
 }

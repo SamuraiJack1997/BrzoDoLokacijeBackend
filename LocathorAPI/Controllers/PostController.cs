@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static DemoProjekatAPI.Logic.PostLogic.PostManager;
 
 namespace DemoProjekatAPI.Controllers
 {
@@ -38,7 +39,7 @@ namespace DemoProjekatAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddPost([FromBody] Post post)
+        public async Task<ActionResult<Post>> AddPost([FromBody] Post post)
         {
             try
             {
@@ -173,6 +174,21 @@ namespace DemoProjekatAPI.Controllers
             {
                 return NotFound(e.Message);
             }
+        }
+
+        [HttpPost("IsLiked")]
+        public async Task<ActionResult<bool>> TopPosts([FromBody] Like like)
+        {
+            try
+            {
+                bool isLiked = await _postManager.IsLiked(like.userId, like.postId);
+                return Ok(isLiked);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
 
     }
