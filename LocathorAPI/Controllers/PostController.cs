@@ -197,10 +197,23 @@ namespace DemoProjekatAPI.Controllers
             try
             {
                 Console.WriteLine(coordinates.latitude+" , "+coordinates.longitude);
-                var posts = await _postManager.PinpointPosts(coordinates.latitude, coordinates.longitude, 50);
+                var posts = await _postManager.PinpointPosts(coordinates.latitude, coordinates.longitude, 0.1);
                 return posts;
             }
             catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("MostLiked")]
+        public async Task<ActionResult<IEnumerable<object>>> MostLiked()
+        {
+            try
+            {
+                return await _postManager.GetMostLiked();
+            }
+            catch(Exception e)
             {
                 return BadRequest(e.Message);
             }

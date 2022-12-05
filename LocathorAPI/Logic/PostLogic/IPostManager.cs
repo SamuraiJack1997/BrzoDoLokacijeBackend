@@ -22,7 +22,7 @@ namespace DemoProjekatAPI.Logic.PostLogic
         public Task<bool> CommentOnPost(Comment comment);
         public Task<ActionResult<IEnumerable<Comment>>> GetCommentsFromPost(int postId);
         public Task<bool> ChangePostPhoto(Post post);
-        public Task<ActionResult<IEnumerable<object>>> GetMostLiked(int start, int end, int step);
+        public Task<ActionResult<IEnumerable<object>>> GetMostLiked();
         public Task<ActionResult<IEnumerable<Post>>> PinpointPosts(double lat, double longit, double radius);
         public Task<bool> IsLiked(int userId, int postId);
     }

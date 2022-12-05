@@ -167,21 +167,16 @@ namespace DemoProjekatAPI.Logic.PostLogic
             return true;
         }
 
-        public async Task<ActionResult<IEnumerable<object>>> GetMostLiked(int start, int end, int step)
+        public async Task<ActionResult<IEnumerable<object>>> GetMostLiked()
         {
-
-            throw new NotImplementedException();
+            var liked = await _context.Likes.GroupBy(x => x.postId).Select(g => new { post = g.Key, count = g.Count() }).OrderBy(o => o.count).Select(g => g.post).ToListAsync();
+            return await _context.Posts.Where(x=> liked.Contains(x.postId)).ToListAsync();
         }
 
         public async Task<ActionResult<IEnumerable<Post>>> PinpointPosts(double la1, double lo1, double r)
         {
             var posts = await _context.Posts.Where(x => (x.Latitude < la1 + r && x.Latitude > la1 - r) && (x.Longitude < lo1 + r && x.Longitude > lo1 - r)).ToListAsync();
             return posts;
-        }
-
-        private bool IsInsideTheSquare(double la,double lo, double la1,double lo1,double r)
-        {
-            return (la < r + la1 && la < la1 - r) && (lo < r + lo1 && lo < lo1 - r);
         }
 
         public async Task<bool> IsLiked(int userId, int postId)
