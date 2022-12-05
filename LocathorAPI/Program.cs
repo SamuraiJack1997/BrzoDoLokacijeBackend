@@ -25,7 +25,7 @@ namespace LocathorAPI
             builder.Services.AddSingleton<ITokenManager, TokenManager>();
 
             var app = builder.Build();
-            //app.Urls.Add(builder.Configuration.GetSection("Service").Get<string>());
+            app.Urls.Add(builder.Configuration.GetSection("Service").Get<string>());
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

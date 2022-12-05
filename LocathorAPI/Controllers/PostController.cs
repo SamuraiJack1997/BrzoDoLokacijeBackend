@@ -219,6 +219,20 @@ namespace DemoProjekatAPI.Controllers
             }
         }
 
+        [HttpGet("UserPosts")]
+        public async Task<ActionResult<IEnumerable<Post>>> UserPosts([FromHeader]string username)
+        {
+            try
+            {
+                Console.WriteLine(username);
+                return await _postManager.PostsByUser(username);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 
     public class ReqBody

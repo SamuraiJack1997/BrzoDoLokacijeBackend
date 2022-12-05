@@ -169,7 +169,7 @@ namespace DemoProjekatAPI.Logic.PostLogic
 
         public async Task<ActionResult<IEnumerable<object>>> GetMostLiked()
         {
-            var liked = await _context.Likes.GroupBy(x => x.postId).Select(g => new { post = g.Key, count = g.Count() }).OrderBy(o => o.count).Select(g => g.post).ToListAsync();
+            var liked = await _context.Likes.GroupBy(x => x.postId).Select(g => new { post = g.Key, count = g.Count() }).OrderBy(o => o.count).Select(g => g.post).Take(20).ToListAsync();
             return await _context.Posts.Where(x=> liked.Contains(x.postId)).ToListAsync();
         }
 
@@ -193,6 +193,14 @@ namespace DemoProjekatAPI.Logic.PostLogic
             return liked!=null;
         }
 
+        public async Task<ActionResult<IEnumerable<Post>>> PostsByUser(string username)
+        {
+            var User = await _context.Users.Where(x => x.Username == username).FirstOrDefaultAsync();
+            if (User == null)
+                throw new Exception("this user does not exist");
+
+            return await _context.Posts.Where(x => x.UserId == User.UserId).ToListAsync();
+        }
 
         public class PostLikes
         {

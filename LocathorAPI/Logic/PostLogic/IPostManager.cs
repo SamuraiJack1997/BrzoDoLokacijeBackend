@@ -25,5 +25,6 @@ namespace DemoProjekatAPI.Logic.PostLogic
         public Task<ActionResult<IEnumerable<object>>> GetMostLiked();
         public Task<ActionResult<IEnumerable<Post>>> PinpointPosts(double lat, double longit, double radius);
         public Task<bool> IsLiked(int userId, int postId);
+        public Task<ActionResult<IEnumerable<Post>>> PostsByUser(string username);
     }
 }
