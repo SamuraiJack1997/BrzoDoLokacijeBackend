@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using DemoProjekatAPI.Data;
 using DemoProjekatAPI.Models;
-using DemoProjekatAPI.Data;
+using DemoProjekatAPI.TokenAuthentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using DemoProjekatAPI.TokenAuthentication;
 
 namespace DemoProjekatAPI.Controllers
 {

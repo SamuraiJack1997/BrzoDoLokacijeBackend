@@ -1,11 +1,6 @@
 ﻿using DemoProjekatAPI.Models;
 using LocathorAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static DemoProjekatAPI.Logic.PostLogic.PostManager;
 
 namespace DemoProjekatAPI.Logic.PostLogic
 {

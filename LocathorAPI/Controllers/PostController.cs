@@ -1,15 +1,7 @@
-﻿using DemoProjekatAPI.Data;
-using DemoProjekatAPI.Filters;
-using DemoProjekatAPI.Logic.PostLogic;
+﻿using DemoProjekatAPI.Logic.PostLogic;
 using DemoProjekatAPI.Models;
 using LocathorAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static DemoProjekatAPI.Logic.PostLogic.PostManager;
 
 namespace DemoProjekatAPI.Controllers
 {

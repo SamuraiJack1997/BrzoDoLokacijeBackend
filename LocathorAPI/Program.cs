@@ -11,10 +11,7 @@ namespace LocathorAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddDbContext<BrzoDoLokacijeDbContext>(options =>
@@ -25,9 +22,8 @@ namespace LocathorAPI
             builder.Services.AddSingleton<ITokenManager, TokenManager>();
 
             var app = builder.Build();
-            //app.Urls.Add(builder.Configuration.GetSection("Service").Get<string>());
+            app.Urls.Add(builder.Configuration.GetSection("Service").Get<string>());
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
 
@@ -44,14 +40,9 @@ namespace LocathorAPI
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();
-        }
-        void OnStopping()
-        {
-
         }
     }
 }
