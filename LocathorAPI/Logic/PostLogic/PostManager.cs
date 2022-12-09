@@ -202,6 +202,12 @@ namespace DemoProjekatAPI.Logic.PostLogic
             return await _context.Posts.Where(x => x.UserId == User.UserId).ToListAsync();
         }
 
+        public async Task<ActionResult<IEnumerable<Post>>> SearchPosts(string title)
+        {
+            List<Post> post = await _context.Posts.Where(x => x.Title.Contains(title)).ToListAsync();
+            return post;
+        }
+
         public class PostLikes
         {
             public Post? post { get; set; }

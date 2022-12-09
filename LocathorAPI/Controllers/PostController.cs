@@ -233,6 +233,19 @@ namespace DemoProjekatAPI.Controllers
             }
         }
 
+        [HttpGet("Search")]
+        public async Task<ActionResult<IEnumerable<Post>>> SearchPosts([FromHeader]string title)
+        {
+            try
+            {
+                return await _postManager.SearchPosts(title);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
     }
 
     public class ReqBody
