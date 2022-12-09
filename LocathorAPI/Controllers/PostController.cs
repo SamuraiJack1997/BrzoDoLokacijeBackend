@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static DemoProjekatAPI.Logic.PostLogic.PostManager;
 
 namespace DemoProjekatAPI.Controllers
 {
@@ -28,6 +29,7 @@ namespace DemoProjekatAPI.Controllers
         {
             try
             {
+                Console.WriteLine("TEST");
                 return await _postManager.GetAllPosts();
             }
             catch(Exception e)
@@ -37,7 +39,7 @@ namespace DemoProjekatAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddPost([FromBody] Post post)
+        public async Task<ActionResult<Post>> AddPost([FromBody] Post post)
         {
             try
             {
@@ -174,12 +176,88 @@ namespace DemoProjekatAPI.Controllers
             }
         }
 
+        [HttpPost("IsLiked")]
+        public async Task<ActionResult<bool>> IsLiked([FromBody] Like like)
+        {
+            try
+            {
+                bool isLiked = await _postManager.IsLiked(like.userId, like.postId);
+                return Ok(isLiked);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
+        }
+
+        [HttpPost("Pinpoint")]
+        public async Task<ActionResult<IEnumerable<Post>>> PinPoint([FromBody] Coordinates coordinates)
+        {
+            try
+            {
+                Console.WriteLine(coordinates.latitude+" , "+coordinates.longitude);
+                var posts = await _postManager.PinpointPosts(coordinates.latitude, coordinates.longitude, 0.1);
+                return posts;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("MostLiked")]
+        public async Task<ActionResult<IEnumerable<object>>> MostLiked()
+        {
+            try
+            {
+                return await _postManager.GetMostLiked();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("UserPosts")]
+        public async Task<ActionResult<IEnumerable<Post>>> UserPosts([FromHeader]string username)
+        {
+            try
+            {
+                Console.WriteLine(username);
+                return await _postManager.PostsByUser(username);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("Search")]
+        public async Task<ActionResult<IEnumerable<Post>>> SearchPosts([FromHeader]string title)
+        {
+            try
+            {
+                return await _postManager.SearchPosts(title);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
     }
 
     public class ReqBody
     {
         public int postId { get; set; }
         public int userId { get; set; }
+    }
+
+    public class Coordinates
+    {
+        public double latitude { get; set; }
+        public double longitude { get; set; }
     }
 
 }
